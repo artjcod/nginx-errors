@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{.ErrorCode}} {{.Message}}</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap');
+
+        * {
+            line-height: 1.2;
+            margin: 0;
+        }
+
+        html {
+            color: #888;
+            display: flex;
+            font-family: 'Roboto', sans-serif;
+            height: 100%;
+            width: 100%;
+        }
+
+        body {
+            width: 45em;
+            max-width: 45em;
+            margin: 0 auto;
+        }
+
+        .container {
+            margin: 50px 5px 5px 5px;
+        }
+
+
+        h1 {
+            color: black;
+            font-size: 6em;
+            font-weight: 400;
+        }
+
+        h2 {
+            color: #c7c7c7;
+            font-size: 3em;
+            font-weight: 400;
+        }
+
+        h3 {
+            color: black;
+            margin-top: 20px;
+            font-family: 'Courier New', sans-serif;
+            font-weight: 300;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>
+        Error {{ .ErrorCode }}
+    </h1>
+    <h2>
+        {{ .Message }}
+    </h2>
+    {{- if .RequestId }}
+    <h3>
+        Request ID: {{- .RequestId }}
+    </h3>
+    {{- end }}
+    {{- if .OriginalURI }}
+    <h3>
+        Request ID: {{- .OriginalURI }}
+    </h3>
+    {{- end }}
+</div>
+</body>
+</html>
