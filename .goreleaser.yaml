@@ -1,0 +1,31 @@
+project_name: nginx-errors
+builds:
+  - main: .
+    binary: nginx-errors
+    env:
+      - CGO_ENABLED=0
+    goarch:
+      - amd64
+      - arm
+    goos:
+      - linux
+      - darwin
+archives:
+  - files:
+      - README.md
+dockers:
+  - skip_push: false
+    dockerfile: Dockerfile
+    use: buildx
+    image_templates:
+      - "vietanhs0817/nginx-errors:v{{ .Tag }}"
+      - "vietanhs0817/nginx-errors:latest"
+    build_flag_templates:
+      - --label=org.label-schema.schema-version=1.0
+      - --label=org.label-schema.version={{ .Version }}
+      - --label=org.label-schema.name={{ .ProjectName }}
+      - --label=org.label-schema.build-date={{ .Date }}
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"

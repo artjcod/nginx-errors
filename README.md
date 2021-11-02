@@ -1,3 +1,3 @@
 # Nginx Errors
 
-This is an additional ingress nginx's default backend with custom error page.
+This is an additional ingres-nginx's default backend with custom error page.

@@ -3,13 +3,16 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
+	"path"
 )
 
 func main() {
-	//errFilesPath := GetEnvAsStringOrFallback("ERROR_FILES_PATH", "/www")
+	port := GetEnvAsStringOrFallback("PORT", "8080")
+	errFilesPath := GetEnvAsStringOrFallback("ERROR_FILES_PATH", "/www")
 
-	t := template.Must(template.ParseGlob("./www/*.html"))
+	t := template.Must(template.ParseGlob(path.Join(errFilesPath, "*.html")))
 
 	http.HandleFunc("/", errorHandler(t))
 
@@ -17,7 +20,5 @@ func main() {
 		w.WriteHeader(http.StatusOK)
 	})
 
-	if err := http.ListenAndServe(fmt.Sprintf(":8080"), nil); err != nil {
-		panic(err)
-	}
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
 }
