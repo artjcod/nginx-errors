@@ -2,11 +2,13 @@ FROM golang:1.16.5-alpine as builder
 
 WORKDIR /src
 
-COPY . .
+COPY go.mod .
 
 RUN go mod download
 
-RUN GO111MODULE=off CGO_ENABLED=0 GOOS=linux go build -o nginx-errors .
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o nginx-errors .
 
 FROM debian:stretch
 
@@ -18,6 +20,6 @@ RUN apt-get update && \
 
 COPY --from=builder /src/nginx-errors .
 
-COPY ./www /www
+COPY www www
 
 ENTRYPOINT ["/nginx-errors"]
