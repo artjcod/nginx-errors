@@ -32,7 +32,7 @@ func errorHandler(t *template.Template) func(http.ResponseWriter, *http.Request)
 		w.Header().Set(RequestId, r.Header.Get(RequestId))
 
 		format := r.Header.Get(FormatHeader)
-		if format == "" {
+		if format != "application/json" {
 			format = DefaultFormat
 		}
 
