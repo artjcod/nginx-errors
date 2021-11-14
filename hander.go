@@ -12,6 +12,8 @@ type Response struct {
 	ErrorCode   int    `json:"error_code"`
 	RequestId   string `json:"request_id"`
 	OriginalURI string `json:"original_uri"`
+	RayId       string `json:"ray_id"`   
+	ClientIp 		string `json:"client_ip"`
 	Message     string `json:"message"`
 }
 
@@ -54,6 +56,8 @@ func errorHandler(t *template.Template) func(http.ResponseWriter, *http.Request)
 			ErrorCode:   code,
 			RequestId:   r.Header.Get(RequestId),
 			OriginalURI: r.Header.Get(OriginalURI),
+			ClientIp:    r.Header.Get(ClientIp),
+			RayId:  		 r.Header.Get(RayId),
 			Message:     message,
 		}
 

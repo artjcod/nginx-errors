@@ -49,6 +49,9 @@
             font-weight: 300;
         }
 
+        span {
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
@@ -61,12 +64,22 @@
     </h2>
     {{- if .RequestId }}
     <h3>
-        Request ID: {{- .RequestId }}
+        <span>Request ID:</span>{{- .RequestId }}
     </h3>
     {{- end }}
     {{- if .OriginalURI }}
     <h3>
-        Original URI: {{- .OriginalURI }}
+        <span>Original URI:</span>{{- .OriginalURI }}
+    </h3>
+    {{- end }}
+    {{- if .RayId }}
+    <h3>
+        <span>Cloudflare Ray ID:</span>{{- .RayId }}
+    </h3>
+    {{- end }}
+    {{- if .ClientIp }}
+    <h3>
+        <span><b>Your IP:</b></span>{{- .ClientIp }}
     </h3>
     {{- end }}
 </div>
