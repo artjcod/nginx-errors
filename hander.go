@@ -33,12 +33,12 @@ func errorHandler(t *template.Template) func(http.ResponseWriter, *http.Request)
 		log.Println("Header:", formatHeader(r.Header))
 		log.Printf("Body: %s\n", formatBody(r))
 
-		w.Header().Set(FormatHeader, r.Header.Get(FormatHeader))
 		w.Header().Set(CodeHeader, r.Header.Get(CodeHeader))
 		w.Header().Set(ContentType, r.Header.Get(ContentType))
 		w.Header().Set(OriginalURI, r.Header.Get(OriginalURI))
 		w.Header().Set(RequestId, r.Header.Get(RequestId))
-		format := r.Header.Get(FormatHeader)
+
+		format := r.Header.Get(ContentType)
 		if format != "application/json" {
 			format = DefaultFormat
 		}
