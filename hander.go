@@ -39,7 +39,7 @@ func errorHandler(t *template.Template) func(http.ResponseWriter, *http.Request)
 		w.Header().Set(RequestId, r.Header.Get(RequestId))
 
 		format := r.Header.Get(ContentType)
-		if format != "application/json" {
+		if strings.HasPrefix(format, "application/json") {
 			format = DefaultFormat
 		}
 
