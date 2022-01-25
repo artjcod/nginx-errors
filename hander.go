@@ -24,6 +24,7 @@ var ErrorMap = map[int]string{
 	403: "Access Denied",
 	404: "Not Found",
 	413: "Request Too Large",
+	429: "Too Many Requests",
 	502: "Bad Gateway",
 	503: "Service Unavailable Error",
 }
