@@ -6,6 +6,10 @@ on:
       version:
         description: Version
         required: true
+# Defines two custom environment variables for the workflow. These are used for the Container registry domain, and a name for the Docker image that this workflow builds.
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   release:
@@ -32,12 +36,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-go-
 
-      - name: Login to registry
-        uses: docker/login-action@v1
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Tag
         run: |
           git config user.name "$GITHUB_ACTOR"
@@ -52,9 +56,7 @@ jobs:
           distribution: goreleaser
           version: latest
           args: release --rm-dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-
+       
       - name: Cache Docker layers
         uses: actions/cache@v2
         with:
@@ -71,8 +73,8 @@ jobs:
             org.label-schema.version=v${{ github.event.inputs.version }}
             org.label-schema.name=nginx-errors
           tags: |
-            vietanhs0817/nginx-errors:v${{ github.event.inputs.version }}
-            vietanhs0817/nginx-errors:latest
+            artjcod/nginx-errors:v${{ github.event.inputs.version }}
+            artjcod/nginx-errors:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
 
